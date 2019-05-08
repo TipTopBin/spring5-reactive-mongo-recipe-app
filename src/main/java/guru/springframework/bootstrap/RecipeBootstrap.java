@@ -39,7 +39,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         loadCategories();
         loadUom();
-        recipeRepository.saveAll(getRecipes());
+        //recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
 
     }
