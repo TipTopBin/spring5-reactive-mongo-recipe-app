@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -44,12 +45,14 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         loadCategories();
         loadUom();
-        recipeRepository.saveAll(getRecipes());
+//        recipeRepository.saveAll(getRecipes()); // comment as once run more than 1 times, will fail due to List value
         log.debug("Loading Bootstrap Data");
 
 
         log.error("#######");
-        log.error("Count: " + reactiveRepository.count());
+        //log.error("Count: " + reactiveRepository.count());
+        Mono<Long> count = reactiveRepository.count();
+        log.error("Count: " + count.block());
     }
 
     private void loadCategories(){
